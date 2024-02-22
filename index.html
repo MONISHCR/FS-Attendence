@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f0f5;
+            padding-top: 20px;
+            padding-bottom: 70px;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #qrcode {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #qrcode h2, #studentPhoto h2 {
+            margin-bottom: 10px;
+        }
+        #qrcode img, #studentPhoto img {
+            max-width: 100%;
+            display: block;
+            margin: 0 auto;
+        }
+        header {
+            background-color: #f2f0f5;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        footer {
+            background-color: #f2f0f5;
+            padding: 10px 0;
+            text-align: center;
+            color: #888;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        .logo {
+            position: absolute;
+            top: 8px;
+            left: 20px;
+            max-height: 80px;
+        }
+        /* Adjustments for mobile responsiveness */
+        @media (max-width: 576px) {
+            .container {
+                padding: 10px;
+            }
+            header {
+                padding: 10px;
+            }
+            footer {
+                padding: 5px 0;
+            }
+            .logo {
+                max-height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="text-center mb-4">
+            <img src="logo.png" alt="QSTRA Logo" class="logo">
+            <h1>QSTRA</h1>
+        </header>
+        
+        <div class="row">
+            <div class="col-12">
+                <h2 class="mb-4">Enter Roll Number:</h2>
+                <div class="form-group">
+                    <input type="text" id="rollNumber" class="form-control" value="" />
+                </div>
+                <button onclick="generateQR(event)" class="btn btn-primary mr-2 btn-block">Generate QR Code</button>
+                <button onclick="clearQR()" class="btn btn-secondary btn-block">Clear</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12" id="resultSection" style="display: none;">
+                <div id="qrcode">
+                    <h2>QR Code</h2>
+                </div>
+                <div id="studentPhoto">
+                    <h2>Image</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        &copy; Monish KMIT
+    </footer>
+
+    <script>
+        var savedRollNumber = localStorage.getItem('rollNumber');
+        if (savedRollNumber) {
+            var confirmSave = confirm("Do you want to use the saved roll number: " + savedRollNumber + "?");
+            if (confirmSave) {
+                document.getElementById('rollNumber').value = savedRollNumber;
+            }
+        }
+
+        function generateQR(event) {
+            event.preventDefault();
+            
+            var rollNumber = document.getElementById('rollNumber').value.toUpperCase();
+            if (!rollNumber) {
+                alert("Please enter a roll number.");
+                return;
+            }
+            
+            var qrDiv = document.getElementById('qrcode');
+            var photoDiv = document.getElementById('studentPhoto');
+
+            // Clear previous content
+            qrDiv.innerHTML = '';
+            photoDiv.innerHTML = '';
+
+            // Show result section
+            document.getElementById('resultSection').style.display = 'block';
+            
+            var qrHeading = document.createElement('h2');
+            qrHeading.textContent = 'QR Code';
+            qrDiv.appendChild(qrHeading);
+
+            var imgQR = document.createElement('img');
+            imgQR.src = 'https://images.weserv.nl/?url=http://teleuniv.in/netra/studentQR/' + rollNumber + '.png';
+            imgQR.alt = "QR Code";
+            qrDiv.appendChild(imgQR);
+
+            var imgPhotoHeading = document.createElement('h2');
+            imgPhotoHeading.textContent = 'Image';
+            photoDiv.appendChild(imgPhotoHeading);
+
+            var imgPhoto = document.createElement('img');
+            imgPhoto.src = 'https://images.weserv.nl/?url=http://teleuniv.in/sanjaya/student-images/' + rollNumber + '.jpg';
+            imgPhoto.alt = "Student Photo";
+            photoDiv.appendChild(imgPhoto);
+
+            var confirmSave = confirm("Do you want to save this roll number for future use?");
+            if (confirmSave) {
+                localStorage.setItem('rollNumber', rollNumber);
+            }
+        }
+
+        function clearQR() {
+            // Clear input field
+            document.getElementById('rollNumber').value = '';
+
+            // Clear result section
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('qrcode').innerHTML = '';
+            document.getElementById('studentPhoto').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
