@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FS Attendence</title>
+    <title>FS Attendance</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -31,15 +31,17 @@
         }
         header {
             background-color: #f2f0f5;
+            color: #000000;
             padding: 20px;
             text-align: center;
             position: relative;
+            border-radius: 8px 8px 0 0;
         }
         footer {
-            background-color: #f2f0f5;
+            background-color: #808389;
             padding: 10px 0;
             text-align: center;
-            color: #888;
+            color: #fff;
             position: fixed;
             bottom: 0;
             width: 100%;
@@ -49,6 +51,21 @@
             top: 8px;
             left: 20px;
             max-height: 80px;
+        }
+        .form-control:focus {
+            box-shadow: none;
+            border-color: #4e73df;
+        }
+        .btn-primary, .btn-secondary {
+            background-color: #4e73df;
+            border-color: #4e73df;
+        }
+        .btn-primary:hover, .btn-secondary:hover {
+            background-color: #3752a6;
+            border-color: #3752a6;
+        }
+        .btn-block {
+            margin-top: 10px;
         }
         /* Adjustments for mobile responsiveness */
         @media (max-width: 576px) {
@@ -78,7 +95,8 @@
             <div class="col-12">
                 <h2 class="mb-4">Enter Roll Number:</h2>
                 <div class="form-group">
-                    <input type="text" id="rollNumber" class="form-control" value="" />
+                    <label for="rollNumber" class="sr-only">Roll Number</label>
+                    <input type="text" id="rollNumber" class="form-control" placeholder="Enter your roll number" aria-label="Roll Number">
                 </div>
                 <button onclick="generateQR(event)" class="btn btn-primary mr-2 btn-block">Generate QR</button>
                 <button onclick="clearQR()" class="btn btn-secondary btn-block">Clear</button>
